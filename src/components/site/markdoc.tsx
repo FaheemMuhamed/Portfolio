@@ -85,7 +85,7 @@ function Callout({ children }: { children: ReactNode }) {
 
 function Stats({ children }: { children: ReactNode }) {
   return (
-    <div className="cs-stats grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-3">
+    <div className="cs-stats grid grid-cols-2 overflow-hidden rounded-xl border border-border bg-card sm:grid-cols-[repeat(auto-fit,minmax(140px,1fr))]">
       {children}
     </div>
   );
@@ -93,7 +93,8 @@ function Stats({ children }: { children: ReactNode }) {
 
 function Stat({ value, label }: { value: string; label: string }) {
   return (
-    <div className="bg-card px-4 py-4">
+    // The offset shadow draws inner dividers only; the container clips it at the outer edges.
+    <div className="px-4 py-4 shadow-[-1px_-1px_0_0_var(--border)]">
       <div className="text-xl font-medium tracking-tight text-foreground">{value}</div>
       <div className="mt-1 text-[13px] leading-5 text-muted-foreground">{label}</div>
     </div>
