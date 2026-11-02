@@ -1,0 +1,127 @@
+---
+title: Morva
+summary: An archive of generative visuals you can play with. Live p5.js, three.js and GLSL entries that designers can shape, export and learn from, without writing code.
+cover: /work/morva/cover.webp
+kind: side-project
+year: '2026'
+client: Side project
+role: Design & build
+duration: Since October 2026
+team: []
+tools:
+  - p5.js
+  - three.js
+  - GLSL
+  - React
+  - Tailwind
+  - shadcn/ui
+  - Vite
+tags:
+  - Generative design
+  - Creative coding
+  - Tool design
+  - Brand identity
+featured: true
+order: 1
+liveUrl: https://morva-studio.com
+behanceUrl: ''
+---
+
+## Overview
+
+Morva is a library of live generative visuals made with p5.js, three.js and GLSL. You pick an entry, shape it with plain controls, set some type over it, and export it as an image, a video, an embed or standalone code. Each entry also explains the technique behind it and where it comes from.
+
+The name comes from *morph*: shapes that keep changing. I designed and built all of it, from the brand to the effects engine.
+
+{% stats %}
+{% stat value="56" label="Entries across Generative, Type and Image" /%}
+{% stat value="53" label="Open-licence typefaces" /%}
+{% stat value="22" label="Type layouts" /%}
+{% stat value="120" label="Example posters in Explore" /%}
+{% /stats %}
+
+## Why I built it
+
+Generative techniques are scattered across Shadertoy, OpenProcessing, tutorials and GitHub. Almost all of them arrive as code first, with little explanation, and they're hard to tweak or export.
+
+For a designer, that's a wall. You can see that reaction–diffusion or a curl-noise flow field would make a great poster, but getting from someone's sketch to a usable file means reading code you didn't write. Developers have the opposite problem: the code is there, but there's no easy way to browse it.
+
+I come from graphic design, illustration, 3D and motion, so I sit somewhere between the two. I wanted a place where these techniques are kept, credited and usable.
+
+{% callout %}
+Unlike a code-first feed, every Morva entry is explained, credited, tweakable and exportable. It's a library, not a feed.
+{% /callout %}
+
+## Who it's for
+
+Graphic and visual designers come first. They want striking generative, image and type effects without writing code, and want to understand what's possible. Creative developers come second. They want a working reference and clean code to start from.
+
+That order shaped the interface: plain words, essentials first, and code that's always there but never in the way.
+
+## Design direction
+
+I called the direction "Catalogue": a museum archive meets Swiss design. The interface is quiet and systematic, like index cards, so the visuals carry the colour. Entries have catalogue numbers, techniques are named properly, and origins are credited ("Gray–Scott, 1984").
+
+![The Morva share card](/work/morva/share-card.webp "The seal, the wordmark and a wall of entries")
+
+The palette is warm grey, never pure grey. An archive grey (#E9E9E6) sits behind the visual, a lighter panel grey holds the sidebars, and ink is near-black. Each token has a dark-mode pair. Signal orange (#FF4A1C) is the only accent, and I keep it for a few moments: the seal, Surprise me and focus states.
+
+![Colour tokens in light and dark](/work/morva/palette-tokens.webp "Eight tokens, light and dark. Signal is the only accent.")
+
+The mark is the seal, a signal-orange shape that slowly morphs from a disc into a square and back. The wordmark is Newsreader Italic and is used for nothing else. Headings and interface text are Archivo, and numbers, values and code are JetBrains Mono. Labels are sentence case, radii are small (5px for panels, 3px for controls), and there are almost no shadows. Separation comes from hairlines and the archive grey.
+
+## How it works
+
+The left sidebar lists the entries, grouped by what they make: Generative (34 entries), Type (10) and Image (12). Each shows its library as a small label. You can search, filter by tag or by how something looks, and hover an entry to see it move. Under each name, "How it works" explains the technique and links to its source.
+
+![Eight Generative entries](/work/morva/generative-entries.webp "Generative: Reaction-Diffusion, Iso City, Arc Panels, Particle Swirl, Terrain Slab, Thread Burst, Night Map and Fold Lines")
+
+![All ten Type entries](/work/morva/type-entries.webp "Type: all ten entries, from Type Echo to ASCII Lens")
+
+Image entries work on your own picture or webcam. The picture stays on your device and isn't saved in share links.
+
+![Image entries applied to a sample photo](/work/morva/image-entries.webp "Image entries: Bit Dither, Line Sketch, Pixel Art, Tracker HUD, Scan Glow and Rect Split")
+
+The inspector on the right has four tabs, always in the same order: Type, Shape, Colour and Finish. Each starts with three or four essentials, and everything else is folded underneath. Colour has eight palette presets that you can preview by hovering.
+
+Type is where my graphic design background shows most. The layout picker has 22 layouts in three groups. The grid systems follow Josef Müller-Brockmann's *Grid Systems in Graphic Design*: 8-, 12-, 20- and 32-field grids, among others, where the gutter equals one baseline unit and text hangs from the top line of each field. The book canons include Van de Graaf, the golden canon and Tschichold's asymmetric layout. Then there are free layouts, like big type, a vertical title or a title along a curve. You can turn on the grid as guides, and guides are never exported.
+
+{% gallery columns=3 %}
+![Van de Graaf canon over Halo Blur](/work/morva/layout-van-de-graaf-halo-blur.webp "Van de Graaf canon")
+
+![32-field grid over Heat Pulse](/work/morva/layout-32-field-heat-pulse.webp "32-field grid")
+
+![Vertical title over Liquid Blob](/work/morva/layout-vertical-title-liquid-blob.webp "Vertical title")
+{% /gallery %}
+
+Finish gives one-click looks: Clean, Soft print, Dreamy, Halftone, Riso, 2-colour, Glitch and Pixel. You hover one to preview it, then fine-tune the grain, bloom, halftone, dither and colour shift underneath.
+
+{% gallery columns=3 %}
+![Reaction-Diffusion with a halftone finish](/work/morva/finish-halftone-reaction-diffusion.webp "Halftone")
+
+![Pill Stream with bloom](/work/morva/finish-glow-pill-stream.webp "Bloom and soft focus")
+
+![ASCII Lens with chromatic shift](/work/morva/finish-glitch-ascii-lens.webp "Chromatic shift")
+{% /gallery %}
+
+Export covers what designers actually need: a PNG up to 6K (6144 px), copy to clipboard for pasting into Figma, a video recording, a share link that stores every setting, an embed for sites like Framer or Notion, and a standalone HTML file. Nineteen entries also give you a runnable p5.js, three.js or GLSL sketch with your settings built in. The rest link to Morva's own source.
+
+Explore is the other half of the site: 120 example posters, made with every entry, floating in a 3D universe you can drift through. Open any of them in the editor with every setting live.
+
+![A selection of Explore posters](/work/morva/explore-example-posters.webp "A selection of the 120 Explore posters, in mixed ratios and finishes")
+
+## Building it
+
+The interface is React with shadcn/ui and Tailwind, bundled with Vite. Underneath is a poster engine that knows nothing about React. It holds the settings, runs the animation loop, swaps entries and handles exports, and the interface subscribes to it.
+
+Entries run on three stages: p5.js for 2D canvas work, three.js for 3D scenes, and a full-screen GLSL helper for shaders. The finish layer is one post-processing shader that handles every switchable effect in a single pass. Its glow is custom, because additive bloom turns light posters white. Colours are used exactly as picked, like in a design tool.
+
+Adding an entry is one file plus one line in the registry. The file declares its parameters, and the registry entry gives it a category, a library, a plain description, the technique and some tags. Search, hover previews, "How it works" and Explore then work automatically. A few rules keep the library consistent: colours always come from the palette, every mouse effect respects the mouse-power slider, and a single frame has to render cleanly, because PNG exports render at high resolution.
+
+The first version went up on 28 October 2026. Two days later it became Morva, and the library has grown in batches since.
+
+## What's next and learnings
+
+The plan is to keep growing the library across generative, image and type effects, and to give more entries their own standalone code. Longer term, I want Morva to be an archive of techniques with their history and credits, not just a set of effects.
+
+The main thing I learned is that a tool's voice is part of its design. Crediting "Gray–Scott, 1984" made me care about where each technique came from, and gave the interface a calm, curatorial tone that lets the visuals be loud. The other lesson was structural. Putting the essentials first and folding the rest away mattered more than any single feature, because it's what makes 56 very different entries feel like one tool.

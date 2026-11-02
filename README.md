@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Faheem Muhamed — portfolio
 
-## Getting Started
+A minimal personal site with case studies, built with Next.js, Tailwind CSS and shadcn/ui. Content lives in this repo as plain files and is edited with [Keystatic](https://keystatic.com), a Git-based CMS at `/keystatic`.
 
-First, run the development server:
+## Run it
+
+You need [Node.js](https://nodejs.org) (LTS).
+
+```bash
+npm install
+```
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Site: http://localhost:3000
+- CMS: http://localhost:3000/keystatic
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Update the portfolio
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Run `npm run dev` and open http://localhost:3000/keystatic.
+2. Edit **Profile** (bio, links, education), **Experience** (one entry per role) or **Projects** (case studies), then click **Save**. Keystatic writes the change to files in `content/` and `public/`, and the site updates instantly.
+3. Commit and push:
 
-## Learn More
+```bash
+git add -A && git commit -m "Update portfolio" && git push
+```
 
-To learn more about Next.js, take a look at the following resources:
+To add a case study, click **Add** under Projects. Fill in the title, summary, cover (16:10), kind and order, then write the body. The **+** menu in the editor inserts images, galleries, callouts and stat rows. The file format is documented in [docs/CONTENT.md](docs/CONTENT.md).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Kinds** decide which tab a project appears in on the home page:
+- `case-study`: Work
+- `side-project`: Side projects
+- `playground`: Playground
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Where things live
 
-## Deploy on Vercel
+```
+content/profile.yaml          name, intro, links, education, certifications
+content/experience/*.yaml     roles, shown in the Experience list
+content/projects/*.mdoc       case studies (frontmatter + Markdoc body)
+public/work/<slug>/           case-study images
+public/images/                avatar
+keystatic.config.ts           CMS schema
+src/app/(site)/               home page and /work/[slug] case-study pages
+src/components/site/          header, footer, cards, tabs, Markdoc renderer
+src/components/ui/            shadcn/ui components
+src/app/globals.css           colour tokens (light + dark) and case-study typography
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploy later
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Nothing is deployed yet. When you're ready:
+
+1. Import this repo on [Vercel](https://vercel.com/new) (free). The defaults work.
+2. Set `NEXT_PUBLIC_SITE_URL` to the live URL, for correct sitemap and share links.
+3. To edit content on the live site rather than locally, switch Keystatic to GitHub mode:
+   - Set `NEXT_PUBLIC_KEYSTATIC_STORAGE=github` in Vercel.
+   - Run `npm run dev` with that variable set locally once, and open `/keystatic`. It walks you through creating a GitHub App and gives you `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET`, `KEYSTATIC_SECRET` and `NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG`.
+   - Add those to Vercel too.
+   - After that, `your-site.com/keystatic` asks you to sign in with GitHub. Each save becomes a commit, and Vercel redeploys.
+
+The repo is set in `keystatic.config.ts` (`FaheemMuhamed/Portfolio`).
