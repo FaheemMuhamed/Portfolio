@@ -30,9 +30,9 @@ export default async function Home() {
               {items
                 .filter((p) => !p.moreOnly)
                 .map((p, i) => (
-                  <Reveal key={p.slug} onScroll>
+                  <div key={p.slug} data-reveal>
                     <ProjectCard project={p} priority={i === 0} />
-                  </Reveal>
+                  </div>
                 ))}
               {items.some((p) => p.moreOnly) ? (
                 <ShowMore>
@@ -92,10 +92,12 @@ export default async function Home() {
       </section>
 
       <section aria-labelledby="experience" className="mt-24">
-        <SectionLabel id="experience">Experience</SectionLabel>
+        <div data-reveal>
+          <SectionLabel id="experience">Experience</SectionLabel>
+        </div>
         <ol className="mt-5 divide-y divide-border">
           {experience.map((e) => (
-            <li key={e.slug} className="grid grid-cols-[auto_1fr] gap-x-3.5 gap-y-1 py-4 sm:grid-cols-[auto_1fr_auto] sm:gap-x-4">
+            <li key={e.slug} data-reveal className="grid grid-cols-[auto_1fr] gap-x-3.5 gap-y-1 py-4 sm:grid-cols-[auto_1fr_auto] sm:gap-x-4">
               <OrgLogo src={e.logo} name={e.company} />
               <div>
                 <p className="text-[15px] text-foreground">
@@ -121,7 +123,7 @@ export default async function Home() {
       </section>
 
       {profile.education.length || profile.certifications.length ? (
-        <section aria-labelledby="education" className="mt-16 grid gap-10 sm:grid-cols-2">
+        <section aria-labelledby="education" data-reveal className="mt-16 grid gap-10 sm:grid-cols-2">
           {profile.education.length ? (
             <div>
               <SectionLabel id="education">Education</SectionLabel>
@@ -159,7 +161,7 @@ export default async function Home() {
       ) : null}
 
       {profile.about ? (
-        <section aria-labelledby="about" className="mt-16">
+        <section aria-labelledby="about" data-reveal className="mt-16">
           <SectionLabel id="about">Outside work</SectionLabel>
           <p className="mt-4 max-w-[560px] text-[15px] leading-7 text-muted-foreground">{profile.about}</p>
         </section>

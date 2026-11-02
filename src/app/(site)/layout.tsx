@@ -1,6 +1,7 @@
 import { DitherFooter } from "@/components/site/dither-footer";
 import { SiteFooter } from "@/components/site/footer";
 import { SiteHeader } from "@/components/site/header";
+import { ScrollReveal } from "@/components/site/scroll-reveal";
 import { getProfile } from "@/lib/content";
 
 export default async function SiteLayout({ children }: LayoutProps<"/">) {
@@ -13,6 +14,7 @@ export default async function SiteLayout({ children }: LayoutProps<"/">) {
         <SiteFooter profile={profile} />
       </div>
       <DitherFooter />
+      <ScrollReveal />
     </>
   );
 }

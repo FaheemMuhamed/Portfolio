@@ -92,7 +92,7 @@ export default async function ProjectPage({ params }: PageProps<"/work/[slug]">)
       </div>
 
       {next ? (
-        <aside className="mt-24 border-t border-border pt-8">
+        <aside data-reveal className="mt-24 border-t border-border pt-8">
           <p className="mb-5 text-[13px] font-medium text-muted-foreground">Next project</p>
           <ProjectCard project={next} />
         </aside>

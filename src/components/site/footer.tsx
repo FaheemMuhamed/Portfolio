@@ -4,7 +4,7 @@ type Profile = Awaited<ReturnType<typeof getProfile>>;
 
 export function SiteFooter({ profile }: { profile: Profile }) {
   return (
-    <footer className="mt-24 border-t border-border py-10 text-sm">
+    <footer data-reveal className="mt-24 border-t border-border py-10 text-sm">
       <p className="text-foreground">Say hi.</p>
       <p className="mt-1 text-muted-foreground">
         I&apos;m always happy to talk about design, 3D or a project you have in mind.
