@@ -27,7 +27,7 @@ npm run dev
 git add -A && git commit -m "Update portfolio" && git push
 ```
 
-To add a case study, click **Add** under Projects. Fill in the title, summary, cover (16:10), kind and order, then write the body. The **+** menu in the editor inserts images, galleries, callouts and stat rows. The file format is documented in [docs/CONTENT.md](docs/CONTENT.md).
+To add a case study, click **Add** under Projects. Fill in the title, summary, cover (16:10), kind and order, then write the body. The **+** menu in the editor inserts images, galleries, callouts and stat rows. The file format is documented in [docs/CONTENT.md](docs/CONTENT.md). For a step-by-step guide to the CMS, see [docs/EDITING.md](docs/EDITING.md).
 
 **Kinds** decide which tab a project appears in on the home page:
 - `case-study`: Work
