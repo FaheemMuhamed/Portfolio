@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "build:static": "node -e \"require('fs').rmSync('.next/dev/types',{recursive:true,force:true})\" && STATIC_EXPORT=true next build"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

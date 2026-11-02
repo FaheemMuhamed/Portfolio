@@ -6,13 +6,14 @@ import { ArrowLeftIcon, ArrowUpRightIcon } from "lucide-react";
 import { MarkdocContent } from "@/components/site/markdoc";
 import { ProjectCard } from "@/components/site/project-card";
 import { Reveal } from "@/components/site/reveal";
+import { asset } from "@/lib/asset";
 import { getProject, getProjects } from "@/lib/content";
 
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
   const projects = await getProjects();
-  return projects.map((p) => ({ slug: p.slug }));
+  return projects.filter((p) => !p.comingSoon).map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/work/[slug]">): Promise<Metadata> {
@@ -22,17 +23,18 @@ export async function generateMetadata({ params }: PageProps<"/work/[slug]">): P
   return {
     title: project.title,
     description: project.summary,
-    openGraph: project.cover ? { images: [project.cover] } : undefined,
+    openGraph: project.cover ? { images: [asset(project.cover)] } : undefined,
   };
 }
 
 export default async function ProjectPage({ params }: PageProps<"/work/[slug]">) {
   const { slug } = await params;
   const [project, all] = await Promise.all([getProject(slug), getProjects()]);
-  if (!project) notFound();
+  if (!project || project.comingSoon) notFound();
 
-  const index = all.findIndex((p) => p.slug === slug);
-  const next = all.length > 1 ? all[(index + 1) % all.length] : null;
+  const ready = all.filter((p) => !p.comingSoon);
+  const index = ready.findIndex((p) => p.slug === slug);
+  const next = ready.length > 1 ? ready[(index + 1) % ready.length] : null;
 
   const meta = [
     { label: "Role", value: project.role },
@@ -79,8 +81,8 @@ export default async function ProjectPage({ params }: PageProps<"/work/[slug]">)
 
       {project.cover ? (
         <Reveal delay={0.05}>
-          <div className="relative mt-10 aspect-[16/10] overflow-hidden rounded-2xl border border-border/70 bg-muted">
-            <Image src={project.cover} alt="" fill priority sizes="(min-width: 720px) 640px, 100vw" className="object-cover" />
+          <div className="relative mt-10 aspect-[16/10] overflow-hidden rounded-lg border border-border/70 bg-muted">
+            <Image src={asset(project.cover)} alt="" fill priority sizes="(min-width: 720px) 640px, 100vw" className="object-cover" />
           </div>
         </Reveal>
       ) : null}
@@ -105,7 +107,7 @@ function PillLink({ href, children }: { href: string; children: React.ReactNode 
       href={href}
       target="_blank"
       rel="noreferrer"
-      className="inline-flex h-8 items-center gap-1 rounded-full border border-border bg-card px-3.5 text-[13px] text-foreground transition-colors hover:bg-muted"
+      className="inline-flex h-8 items-center gap-1 rounded-sm border border-border bg-card px-3.5 text-[13px] text-foreground transition-colors hover:bg-muted"
     >
       {children}
       <ArrowUpRightIcon className="size-3.5 text-muted-foreground" />

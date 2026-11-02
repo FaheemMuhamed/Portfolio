@@ -8,9 +8,10 @@ intro: >-
   this I designed for QuillAudits, DaoLens and Univ.AI, and studied at IIT
   Guwahati.
 about: >-
-  Outside work I build small tools and experiments. The latest is Morva, an
-  archive of generative visuals designers can play with, export and learn
-  from.
+  Outside work I'm usually planning the next trek. I've done the Annapurna Base
+  Camp trek and a bike trip across Ladakh. I also build small tools and
+  experiments; the latest is Morva, an archive of generative visuals designers
+  can play with, export and learn from.
 available: true
 email: faheempm15@gmail.com
 links:
@@ -22,6 +23,7 @@ links:
     url: https://www.instagram.com/faheem_muhamed_/
 education:
   - school: Indian Institute of Technology, Guwahati
+    logo: /logos/iit-guwahati.png
     degree: Bachelor's degree
     years: 2020 – 2024
 certifications:

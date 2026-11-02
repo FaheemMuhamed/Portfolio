@@ -66,6 +66,12 @@ export default config({
         education: fields.array(
           fields.object({
             school: fields.text({ label: "School" }),
+            logo: fields.image({
+              label: "Logo",
+              description: "Square, ideally 160×160. Leave empty to show an initial.",
+              directory: "public/logos",
+              publicPath: "/logos/",
+            }),
             degree: fields.text({ label: "Degree" }),
             years: fields.text({ label: "Years" }),
           }),
@@ -116,6 +122,16 @@ export default config({
         tools: list("Tool"),
         tags: list("Tag"),
         featured: fields.checkbox({ label: "Featured", defaultValue: false }),
+        moreOnly: fields.checkbox({
+          label: "Hide behind Show more",
+          description: "Listed only after the visitor clicks Show more on the home page.",
+          defaultValue: false,
+        }),
+        comingSoon: fields.checkbox({
+          label: "Coming soon",
+          description: "Shows the card with a Coming soon label and no page.",
+          defaultValue: false,
+        }),
         order: fields.integer({
           label: "Order",
           description: "Lower numbers show first.",
@@ -161,6 +177,12 @@ export default config({
       schema: {
         company: fields.slug({ name: { label: "Company" } }),
         role: fields.text({ label: "Role" }),
+        logo: fields.image({
+          label: "Logo",
+          description: "Square, ideally 160×160. Leave empty to show an initial.",
+          directory: "public/logos",
+          publicPath: "/logos/",
+        }),
         location: fields.text({ label: "Location" }),
         start: fields.text({ label: "Start", description: "e.g. Aug 2025" }),
         end: fields.text({ label: "End", description: "Leave empty for Present" }),

@@ -1,8 +1,10 @@
-import Image from "next/image";
+import { DitherAvatar } from "@/components/site/dither-avatar";
 import { ExternalLink } from "@/components/site/footer";
 import { PlaygroundTile, ProjectCard } from "@/components/site/project-card";
 import { Reveal } from "@/components/site/reveal";
+import { ShowMore } from "@/components/site/show-more";
 import { WorkTabs } from "@/components/site/work-tabs";
+import { asset } from "@/lib/asset";
 import { getExperience, getProfile, getProjects, kindLabel, type Kind } from "@/lib/content";
 
 export default async function Home() {
@@ -25,11 +27,22 @@ export default async function Home() {
             </div>
           ) : (
             <div className="flex flex-col gap-14">
-              {items.map((p, i) => (
-                <Reveal key={p.slug} onScroll>
-                  <ProjectCard project={p} priority={i === 0} />
-                </Reveal>
-              ))}
+              {items
+                .filter((p) => !p.moreOnly)
+                .map((p, i) => (
+                  <Reveal key={p.slug} onScroll>
+                    <ProjectCard project={p} priority={i === 0} />
+                  </Reveal>
+                ))}
+              {items.some((p) => p.moreOnly) ? (
+                <ShowMore count={items.filter((p) => p.moreOnly).length}>
+                  {items
+                    .filter((p) => p.moreOnly)
+                    .map((p) => (
+                      <ProjectCard key={p.slug} project={p} />
+                    ))}
+                </ShowMore>
+              ) : null}
             </div>
           ),
       };
@@ -40,16 +53,7 @@ export default async function Home() {
     <>
       <section className="pt-10 pb-14 sm:pt-16">
         <Reveal>
-          {profile.avatar ? (
-            <Image
-              src={profile.avatar}
-              alt={profile.name}
-              width={64}
-              height={64}
-              priority
-              className="size-16 rounded-full border border-border object-cover"
-            />
-          ) : null}
+          {profile.avatar ? <DitherAvatar src={asset(profile.avatar)} alt={profile.name} /> : null}
           <h1 className="mt-6 text-[22px] font-medium tracking-tight">{profile.name}</h1>
           <p className="mt-0.5 flex items-center gap-2 text-[15px] text-muted-foreground">
             {profile.role}
@@ -75,7 +79,7 @@ export default async function Home() {
                 {l.label}
               </ExternalLink>
             ))}
-            {profile.resume ? <ExternalLink href={profile.resume}>Resume</ExternalLink> : null}
+            {profile.resume ? <ExternalLink href={asset(profile.resume)}>Resume</ExternalLink> : null}
           </div>
         </Reveal>
       </section>
@@ -91,7 +95,8 @@ export default async function Home() {
         <SectionLabel id="experience">Experience</SectionLabel>
         <ol className="mt-5 divide-y divide-border">
           {experience.map((e) => (
-            <li key={e.slug} className="grid gap-1 py-4 sm:grid-cols-[1fr_auto] sm:gap-6">
+            <li key={e.slug} className="grid grid-cols-[auto_1fr] gap-x-3.5 gap-y-1 py-4 sm:grid-cols-[auto_1fr_auto] sm:gap-x-4">
+              <OrgLogo src={e.logo} name={e.company} />
               <div>
                 <p className="text-[15px] text-foreground">
                   {e.url ? (
@@ -107,7 +112,7 @@ export default async function Home() {
                   <p className="mt-1 text-sm leading-6 text-muted-foreground">{e.description}</p>
                 ) : null}
               </div>
-              <p className="order-first font-mono text-xs text-muted-foreground sm:order-none sm:pt-1">
+              <p className="col-start-2 font-mono text-xs text-muted-foreground sm:col-start-auto sm:pt-1">
                 {e.start} — {e.end || "Present"}
               </p>
             </li>
@@ -122,11 +127,14 @@ export default async function Home() {
               <SectionLabel id="education">Education</SectionLabel>
               <ul className="mt-4 space-y-3">
                 {profile.education.map((ed) => (
-                  <li key={ed.school} className="text-sm">
-                    <p className="text-foreground">{ed.school}</p>
-                    <p className="text-muted-foreground">
-                      {ed.degree} · <span className="font-mono text-xs">{ed.years}</span>
-                    </p>
+                  <li key={ed.school} className="flex gap-3.5 text-sm">
+                    <OrgLogo src={ed.logo} name={ed.school} />
+                    <div>
+                      <p className="text-foreground">{ed.school}</p>
+                      <p className="text-muted-foreground">
+                        {ed.degree} · <span className="font-mono text-xs">{ed.years}</span>
+                      </p>
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -157,6 +165,21 @@ export default async function Home() {
         </section>
       ) : null}
     </>
+  );
+}
+
+function OrgLogo({ src, name }: { src?: string | null; name: string }) {
+  return (
+    <span className="mt-0.5 grid size-9 shrink-0 place-items-center overflow-hidden rounded-sm border border-border bg-white">
+      {src ? (
+        // eslint-disable-next-line @next/next/no-img-element -- tiny pre-sized logo
+        <img src={asset(src)} alt="" width={36} height={36} loading="lazy" className="size-full object-contain p-1" />
+      ) : (
+        <span className="text-[13px] font-medium text-neutral-500" aria-hidden>
+          {name.replace(/[^A-Za-z]/g, "").charAt(0)}
+        </span>
+      )}
+    </span>
   );
 }
 

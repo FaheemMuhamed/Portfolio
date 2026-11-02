@@ -1,5 +1,6 @@
 import Markdoc, { type Config, type Node, type RenderableTreeNode, Tag } from "@markdoc/markdoc";
 import React, { type ReactNode } from "react";
+import { asset } from "@/lib/asset";
 import { cn } from "@/lib/utils";
 
 const isFigure = (child: RenderableTreeNode) =>
@@ -49,11 +50,11 @@ function Figure({ src, alt, title }: { src: string; alt?: string; title?: string
     <figure className="cs-figure">
       {/* eslint-disable-next-line @next/next/no-img-element -- body images are pre-optimised WebP of unknown size */}
       <img
-        src={src}
+        src={asset(src)}
         alt={alt ?? ""}
         loading="lazy"
         decoding="async"
-        className="w-full rounded-xl border border-border/70 bg-muted"
+        className="w-full rounded-lg border border-border/70 bg-muted"
       />
       {title ? (
         <figcaption className="mt-2.5 text-[13px] text-muted-foreground">{title}</figcaption>
@@ -77,7 +78,7 @@ function Gallery({ columns = 2, children }: { columns?: number; children: ReactN
 
 function Callout({ children }: { children: ReactNode }) {
   return (
-    <aside className="cs-callout rounded-xl border border-border bg-card px-5 py-4 text-[15.5px] leading-7 text-foreground [&>p+p]:mt-3">
+    <aside className="cs-callout rounded-lg border border-border bg-card px-5 py-4 text-[15.5px] leading-7 text-foreground [&>p+p]:mt-3">
       {children}
     </aside>
   );
@@ -85,7 +86,7 @@ function Callout({ children }: { children: ReactNode }) {
 
 function Stats({ children }: { children: ReactNode }) {
   return (
-    <div className="cs-stats grid grid-cols-2 overflow-hidden rounded-xl border border-border bg-card sm:grid-cols-[repeat(auto-fit,minmax(140px,1fr))]">
+    <div className="cs-stats grid grid-cols-2 overflow-hidden rounded-lg border border-border bg-card sm:grid-cols-[repeat(auto-fit,minmax(140px,1fr))]">
       {children}
     </div>
   );
