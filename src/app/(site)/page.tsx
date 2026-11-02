@@ -35,7 +35,7 @@ export default async function Home() {
                   </Reveal>
                 ))}
               {items.some((p) => p.moreOnly) ? (
-                <ShowMore count={items.filter((p) => p.moreOnly).length}>
+                <ShowMore>
                   {items
                     .filter((p) => p.moreOnly)
                     .map((p) => (
