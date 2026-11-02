@@ -1,16 +1,24 @@
 import type { getProfile } from "@/lib/content";
+import { CopyEmail } from "./copy-email";
 
 type Profile = Awaited<ReturnType<typeof getProfile>>;
 
 export function SiteFooter({ profile }: { profile: Profile }) {
   return (
-    <footer data-reveal className="mt-24 border-t border-border py-10 text-sm">
+    <footer id="contact" data-reveal className="mt-24 scroll-mt-24 border-t border-border py-10 text-sm">
       <p className="text-foreground">Say hi.</p>
       <p className="mt-1 text-muted-foreground">
         I&apos;m always happy to talk about design, 3D or a project you have in mind.
       </p>
       <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
-        {profile.email ? <ExternalLink href={`mailto:${profile.email}`}>{profile.email}</ExternalLink> : null}
+        {profile.email ? (
+          <CopyEmail
+            email={profile.email}
+            className="text-muted-foreground underline decoration-border underline-offset-4 transition-colors hover:text-foreground hover:decoration-current"
+          >
+            {profile.email}
+          </CopyEmail>
+        ) : null}
         {profile.links.map((l) => (
           <ExternalLink key={l.url} href={l.url}>
             {l.label}

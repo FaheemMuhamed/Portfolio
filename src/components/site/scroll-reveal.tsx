@@ -22,12 +22,12 @@ export function ScrollReveal() {
           .filter((e) => e.isIntersecting)
           .forEach((e, i) => {
             const el = e.target as HTMLElement;
-            el.style.transitionDelay = `${Math.min(i, 5) * 60}ms`;
+            el.style.transitionDelay = `${Math.min(i, 5) * 140}ms`;
             el.classList.add("is-revealed");
             io.unobserve(el);
           });
       },
-      { rootMargin: "0px 0px -8% 0px" },
+      { rootMargin: "0px 0px -12% 0px" },
     );
     for (const el of pending) {
       el.classList.add("will-reveal");

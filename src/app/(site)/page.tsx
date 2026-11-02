@@ -1,3 +1,5 @@
+import { ArrowUpRightIcon } from "lucide-react";
+import { CopyEmail } from "@/components/site/copy-email";
 import { DitherAvatar } from "@/components/site/dither-avatar";
 import { ExternalLink } from "@/components/site/footer";
 import { PlaygroundTile, ProjectCard } from "@/components/site/project-card";
@@ -61,7 +63,7 @@ export default async function Home() {
             {profile.location}
           </p>
         </Reveal>
-        <Reveal delay={0.05}>
+        <Reveal delay={0.15}>
           <p className="mt-6 max-w-[560px] text-[15.5px] leading-7 text-foreground/85">{profile.intro}</p>
           {profile.available ? (
             <p className="mt-4 inline-flex items-center gap-2 text-[13px] text-muted-foreground">
@@ -73,7 +75,14 @@ export default async function Home() {
             </p>
           ) : null}
           <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm">
-            {profile.email ? <ExternalLink href={`mailto:${profile.email}`}>Email</ExternalLink> : null}
+            {profile.email ? (
+              <CopyEmail
+                email={profile.email}
+                className="text-muted-foreground underline decoration-border underline-offset-4 transition-colors hover:text-foreground hover:decoration-current"
+              >
+                Email
+              </CopyEmail>
+            ) : null}
             {profile.links.map((l) => (
               <ExternalLink key={l.url} href={l.url}>
                 {l.label}
@@ -97,13 +106,27 @@ export default async function Home() {
         </div>
         <ol className="mt-5 divide-y divide-border">
           {experience.map((e) => (
-            <li key={e.slug} data-reveal className="grid grid-cols-[auto_1fr] gap-x-3.5 gap-y-1 py-4 sm:grid-cols-[auto_1fr_auto] sm:gap-x-4">
+            <li
+              key={e.slug}
+              data-reveal
+              data-cursor={e.url ? "Visit" : undefined}
+              className={`group/row relative -mx-3 grid grid-cols-[auto_1fr] gap-x-3.5 gap-y-1 rounded-sm px-3 py-4 transition-colors sm:grid-cols-[auto_1fr_auto] sm:gap-x-4 ${
+                e.url ? "hover:bg-muted/60" : ""
+              }`}
+            >
               <OrgLogo src={e.logo} name={e.company} />
               <div>
                 <p className="text-[15px] text-foreground">
                   {e.url ? (
-                    <a href={e.url} target="_blank" rel="noreferrer" className="hover:underline hover:underline-offset-4">
+                    // The link stretches over the whole row, so anywhere in it opens the company site.
+                    <a
+                      href={e.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="outline-none after:absolute after:inset-0 after:rounded-sm focus-visible:after:ring-2 focus-visible:after:ring-ring"
+                    >
                       {e.company}
+                      <ArrowUpRightIcon className="ml-0.5 inline size-3.5 -translate-x-1 align-[-1px] text-muted-foreground opacity-0 transition-all group-hover/row:translate-x-0 group-hover/row:opacity-100" />
                     </a>
                   ) : (
                     e.company
@@ -129,7 +152,7 @@ export default async function Home() {
               <SectionLabel id="education">Education</SectionLabel>
               <ul className="mt-4 space-y-3">
                 {profile.education.map((ed) => (
-                  <li key={ed.school} className="flex gap-3.5 text-sm">
+                  <li key={ed.school} className="group/row flex gap-3.5 text-sm">
                     <OrgLogo src={ed.logo} name={ed.school} />
                     <div>
                       <p className="text-foreground">{ed.school}</p>
@@ -172,7 +195,7 @@ export default async function Home() {
 
 function OrgLogo({ src, name }: { src?: string | null; name: string }) {
   return (
-    <span className="mt-0.5 grid size-9 shrink-0 place-items-center overflow-hidden rounded-sm border border-border bg-white">
+    <span className="mt-0.5 grid size-9 shrink-0 place-items-center overflow-hidden rounded-sm border border-border bg-white transition-[filter,opacity] duration-300 [@media(hover:hover)]:opacity-75 [@media(hover:hover)]:grayscale [@media(hover:hover)]:group-hover/row:opacity-100 [@media(hover:hover)]:group-hover/row:grayscale-0">
       {src ? (
         // eslint-disable-next-line @next/next/no-img-element -- tiny pre-sized logo
         <img src={asset(src)} alt="" width={36} height={36} loading="lazy" className="size-full object-contain p-1" />

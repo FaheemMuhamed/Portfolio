@@ -1,13 +1,49 @@
 import Markdoc, { type Config, type Node, type RenderableTreeNode, Tag } from "@markdoc/markdoc";
 import React, { type ReactNode } from "react";
 import { asset } from "@/lib/asset";
+import { CountUp } from "./count-up";
 import { cn } from "@/lib/utils";
 
 const isFigure = (child: RenderableTreeNode) =>
   Tag.isTag(child) ? child.name === "Figure" : typeof child === "string" && !child.trim();
 
+export const slugify = (s: string) =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+const textOf = (node: Node) => {
+  let out = "";
+  for (const child of node.walk()) if (child.type === "text") out += String(child.attributes.content ?? "");
+  return out;
+};
+
+// Section headings (for "On this page") and a reading-time estimate, from the Markdoc tree.
+export function outline(node: Node) {
+  const headings: { id: string; title: string }[] = [];
+  for (const child of node.children) {
+    if (child.type === "heading" && child.attributes.level === 2) {
+      const title = textOf(child);
+      headings.push({ id: slugify(title), title });
+    }
+  }
+  const words = textOf(node).split(/\s+/).filter(Boolean).length;
+  return { headings, minutes: Math.max(1, Math.round(words / 220)) };
+}
+
 const config: Config = {
   nodes: {
+    heading: {
+      children: ["inline"],
+      attributes: { level: { type: Number, required: true } },
+      transform(node, cfg) {
+        const level = Number(node.attributes.level);
+        const children = node.transformChildren(cfg);
+        const id = level <= 3 ? slugify(textOf(node)) : undefined;
+        return new Tag(`h${level}`, { id, className: "scroll-mt-24" }, children);
+      },
+    },
     image: {
       render: "Figure",
       attributes: {
@@ -54,7 +90,9 @@ function Figure({ src, alt, title }: { src: string; alt?: string; title?: string
         alt={alt ?? ""}
         loading="lazy"
         decoding="async"
-        className="w-full rounded-lg border border-border/70 bg-muted"
+        data-zoomable
+        data-cursor="Zoom"
+        className="w-full cursor-zoom-in rounded-lg border border-border/70 bg-muted"
       />
       {title ? (
         <figcaption className="mt-2.5 text-[13px] text-muted-foreground">{title}</figcaption>
@@ -96,7 +134,9 @@ function Stat({ value, label }: { value: string; label: string }) {
   return (
     // The offset shadow draws inner dividers only; the container clips it at the outer edges.
     <div className="px-4 py-4 shadow-[-1px_-1px_0_0_var(--border)]">
-      <div className="text-xl font-medium tracking-tight text-foreground">{value}</div>
+      <div className="text-xl font-medium tracking-tight text-foreground">
+        <CountUp value={value} />
+      </div>
       <div className="mt-1 text-[13px] leading-5 text-muted-foreground">{label}</div>
     </div>
   );

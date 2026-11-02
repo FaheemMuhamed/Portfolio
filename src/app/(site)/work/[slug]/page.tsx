@@ -3,8 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeftIcon, ArrowUpRightIcon } from "lucide-react";
-import { MarkdocContent } from "@/components/site/markdoc";
+import { CaseToc } from "@/components/site/case-toc";
+import { Lightbox } from "@/components/site/lightbox";
+import { MarkdocContent, outline } from "@/components/site/markdoc";
 import { ProjectCard } from "@/components/site/project-card";
+import { ReadingProgress } from "@/components/site/reading-progress";
 import { Reveal } from "@/components/site/reveal";
 import { asset } from "@/lib/asset";
 import { getProject, getProjects } from "@/lib/content";
@@ -36,21 +39,26 @@ export default async function ProjectPage({ params }: PageProps<"/work/[slug]">)
   const index = ready.findIndex((p) => p.slug === slug);
   const next = ready.length > 1 ? ready[(index + 1) % ready.length] : null;
 
+  const { headings, minutes } = outline(project.body);
   const meta = [
     { label: "Role", value: project.role },
     { label: "Context", value: project.client },
     { label: "Timeline", value: [project.duration, project.year].filter(Boolean).join(" · ") },
     { label: "Team", value: project.team.length ? project.team.join(", ") : "" },
     { label: "Tools", value: project.tools.join(", ") },
+    { label: "Read", value: `${minutes} min` },
   ].filter((m) => m.value);
 
   return (
-    <article className="pt-6">
+    <article id="case" className="pt-6">
+      <ReadingProgress targetId="case" />
+      <CaseToc items={headings} />
+      <Lightbox />
       <Link
         href="/"
-        className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        className="group inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
       >
-        <ArrowLeftIcon className="size-3.5" />
+        <ArrowLeftIcon className="size-3.5 transition-transform group-hover:-translate-x-0.5" />
         Back
       </Link>
 
@@ -80,9 +88,18 @@ export default async function ProjectPage({ params }: PageProps<"/work/[slug]">)
       </Reveal>
 
       {project.cover ? (
-        <Reveal delay={0.05}>
+        <Reveal delay={0.15}>
           <div className="relative mt-10 aspect-[16/10] overflow-hidden rounded-lg border border-border/70 bg-muted">
-            <Image src={asset(project.cover)} alt="" fill priority sizes="(min-width: 720px) 640px, 100vw" className="object-cover" />
+            <Image
+              src={asset(project.cover)}
+              alt={`${project.title} cover`}
+              fill
+              priority
+              sizes="(min-width: 720px) 640px, 100vw"
+              data-zoomable
+              data-cursor="Zoom"
+              className="cursor-zoom-in object-cover"
+            />
           </div>
         </Reveal>
       ) : null}

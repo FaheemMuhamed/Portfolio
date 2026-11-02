@@ -14,11 +14,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
-  const next = resolvedTheme === "dark" ? "light" : "dark";
   return (
     <button
       type="button"
-      onClick={() => setTheme(next)}
+      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
       aria-label="Toggle colour theme"
       className="grid size-8 place-items-center rounded-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
     >

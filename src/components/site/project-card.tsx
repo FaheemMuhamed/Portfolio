@@ -45,9 +45,14 @@ export function ProjectCard({ project, priority }: { project: ProjectSummary; pr
     </>
   );
 
-  if (project.comingSoon) return <div className="group block">{body}</div>;
+  if (project.comingSoon)
+    return (
+      <div className="group block" data-cursor="Soon">
+        {body}
+      </div>
+    );
   return (
-    <Link href={`/work/${project.slug}`} className="group block outline-none">
+    <Link href={`/work/${project.slug}`} data-cursor="View" className="group block outline-none">
       {body}
     </Link>
   );
@@ -55,7 +60,7 @@ export function ProjectCard({ project, priority }: { project: ProjectSummary; pr
 
 export function PlaygroundTile({ project }: { project: ProjectSummary }) {
   return (
-    <Link href={`/work/${project.slug}`} className="group block outline-none">
+    <Link href={`/work/${project.slug}`} data-cursor="View" className="group block outline-none">
       <div className="relative aspect-square overflow-hidden rounded-lg border border-border/70 bg-muted group-focus-visible:ring-2 group-focus-visible:ring-ring">
         {project.cover ? (
           <Image

@@ -144,19 +144,29 @@
 .prose-case figure, .prose-case .cs-gallery, .prose-case .cs-stats, .prose-case .cs-callout { margin-top: 2rem; margin-bottom: 2rem; }
 
 /* Motion */
-@keyframes rise {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: none; }
+@keyframes blink {
+  50% { opacity: 0.25; }
 }
-.reveal { animation: rise 0.6s cubic-bezier(0.2, 0, 0, 1) both; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); filter: blur(10px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
+}
+.reveal { animation: rise 1.3s cubic-bezier(0.16, 1, 0.3, 1) both; }
+/* Slow, soft focus-pull as content scrolls in. */
 .will-reveal {
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(28px);
+  filter: blur(12px);
   transition:
-    opacity 0.7s cubic-bezier(0.2, 0, 0, 1),
-    transform 0.7s cubic-bezier(0.2, 0, 0, 1);
+    opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1.6s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 1.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.will-reveal.is-revealed { opacity: 1; transform: none; }
+.will-reveal.is-revealed { opacity: 1; transform: none; filter: blur(0); }
 @media (prefers-reduced-motion: reduce) {
   .reveal { animation: none; }
 }
@@ -167,3 +177,6 @@
     radial-gradient(circle, color-mix(in oklab, var(--foreground) 16%, transparent) 1px, transparent 1.3px) 0 0 / 12px 12px,
     var(--muted);
 }
+
+/* Keep anchored sections clear of the sticky header */
+main [id] { scroll-margin-top: 5.5rem; }

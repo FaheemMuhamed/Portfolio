@@ -88,3 +88,4 @@ The repo is set in `keystatic.config.ts` (`FaheemMuhamed/Portfolio`).
 - CMS routes use `*.cms.tsx` / `*.cms.ts` file names. Static builds (`STATIC_EXPORT=true`) skip them; `npm run dev` and `npm run build` include them.
 - Images in content use paths like `/work/...`. `src/lib/asset.ts` adds the `/Portfolio` sub-path on GitHub Pages.
 - Logos live in `public/logos/`. An entry without a logo shows its initial.
+- While `npm run dev` is running, edits to `src/app/globals.css` sometimes don't show up (a dev-server watcher quirk). Restart `npm run dev`. Content edits from the CMS aren't affected.

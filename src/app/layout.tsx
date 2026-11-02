@@ -14,13 +14,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  // Origin only: Next.js adds the base path (e.g. /Portfolio) to metadata URLs itself.
+  metadataBase: new URL(new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").origin),
   title: {
     default: "Faheem Muhamed — Visual Designer",
     template: "%s — Faheem Muhamed",
   },
   description:
     "Faheem Muhamed is a visual designer in Bengaluru working across brand, marketing, product, illustration, 3D and motion.",
+  openGraph: { type: "website", siteName: "Faheem Muhamed" },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
